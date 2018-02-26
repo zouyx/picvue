@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+<div id="app">
+    <el-row>
+    <el-col v-for="(item, index) in imgs" :key="item" :offset="index > 0 ? 2 : 0">
+        <el-card :body-style="{ padding: '0px' }" >
+            <img :src="item" >
+            <div style="padding: 14px;">
+                <span>好吃的汉堡</span>
+                <div class="bottom clearfix">
+                    <el-button type="text" class="button">操作按钮</el-button>
+                </div>
+            </div>
+        </el-card>
+    </el-col>
+</el-row>
+
+    <style>
+        .time {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .bottom {
+            margin-top: 13px;
+            line-height: 12px;
+        }
+
+        .button {
+            padding: 0;
+            float: right;
+        }
+
+
+        .clearfix:before,
+        .clearfix:after {
+            display: table;
+            content: "";
+        }
+
+        .clearfix:after {
+            clear: both
+        }
+        .image{
+            position:absolute;
+            top:0;
+            bottom:0;
+            left:0;
+            right:0;
+            width:100%;
+            margin:auto;
+            z-index: -1;
+            *zoom:1;
+        }
+        .img-box:before {
+            content: "";
+            display: inline-block;
+            padding-bottom: 100%;
+            width: 0.1px;   /*必须要有数值，否则无法把高度撑起来*/
+            vertical-align: middle;
+        }
+        .img-box{
+            width: 100%;
+            position:relative;
+            z-index:1;
+        }
+    </style>
+
+</div>
+</body>
+<!-- 先引入 Vue -->
+<script src="./js/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="./js/index.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            imgs:[
+                "/Users/joezou/pic/3828072.jpg",
+                "/Users/joezou/pic/UNADJUSTEDNONRAW_thumb_175.jpg",
+            ]
+
+        }
+    })
+</script>
+</html>
