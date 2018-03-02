@@ -79,13 +79,29 @@
 <!-- 引入组件库 -->
 <script src="./js/index.js"></script>
 <script>
+    var  fs = require('fs');
+    var  join = require('path').join;
+    /**
+     *
+     * @param startPath  起始目录文件夹路径
+     * @returns {Array}
+     */
+    function findSync(startPath) {
+        var result=[];
+        var files=fs.readdirSync(path);
+        for (path in files) {
+            var fPath = join(path, val);
+            result.push(fPath);
+        }
+
+        return result;
+    }
+
+
     new Vue({
         el: '#app',
         data: {
-            imgs:[
-                "/Users/joezou/pic/3828072.jpg",
-                "/Users/joezou/pic/UNADJUSTEDNONRAW_thumb_175.jpg",
-            ]
+            imgs:findSync('/Users/joezou/pic／')
 
         }
     })
