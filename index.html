@@ -7,13 +7,13 @@
 <body>
 <div id="app">
   <el-row>
-    <el-col v-for="(item, index) in imgs" :key="item" :offset="index > 0 ? 2 : 0">
+    <el-col :span="4" v-for="(item, index) in imgs" :key="item" :offset="index > 0 ? 2 : 0" style="margin-left:1%">
       <el-card :body-style="{ padding: '0px' }" >
-        <img :src="item" >
+        <img :src="item" height="200" width="300">
         <div style="padding: 14px;">
-          <span>好吃的汉堡</span>
+          <span>{{item}}</span>
           <div class="bottom clearfix">
-            <el-button type="text" class="button">操作按钮</el-button>
+            <el-button type="text" class="button" v-on:click="doDelete(item)">删除</el-button>
           </div>
         </div>
       </el-card>
@@ -36,6 +36,10 @@
       float: right;
     }
 
+    .image {
+      width: 100%;
+      display: block;
+    }
 
     .clearfix:before,
     .clearfix:after {
@@ -45,29 +49,6 @@
 
     .clearfix:after {
       clear: both
-    }
-    .image{
-      position:absolute;
-      top:0;
-      bottom:0;
-      left:0;
-      right:0;
-      width:100%;
-      margin:auto;
-      z-index: -1;
-      *zoom:1;
-    }
-    .img-box:before {
-      content: "";
-      display: inline-block;
-      padding-bottom: 100%;
-      width: 0.1px;   /*必须要有数值，否则无法把高度撑起来*/
-      vertical-align: middle;
-    }
-    .img-box{
-      width: 100%;
-      position:relative;
-      z-index:1;
     }
   </style>
 
@@ -83,22 +64,29 @@
   var app=new Vue({
     el: '#app',
     data: {
-      imgs:["/Users/joezou/pic/3828072.jpg",
-        "/Users/joezou/pic/UNADJUSTEDNONRAW_thumb_175.jpg",
-        "/Users/joezou/pic/UNADJUSTEDNONRAW_thumb_176.jpg",
-        "/Users/joezou/pic/UNADJUSTEDNONRAW_thumb_177.jpg"]
+      imgs:[],
+      visible2: false
     },
     created:function() {
+      var _self=this
       axios.get('http://127.0.0.1:7001')
         .then(function (response) {
           console.log("response:");
           console.log(response);
+          for (var path of response.data.data){
+            _self.imgs.push(path)
+          }
+          console.log(_self.imgs)
         })
         .catch(function (error) {
           console.log("err:");
           console.log(error);
         });
-        console.log("111111")
+    },
+    methods:{
+      doDelete: function (item) {
+        console.log("item:"+item)
+      }
     }
   })
 </script>
