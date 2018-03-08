@@ -6,10 +6,6 @@ const  Join = require('path').join;
 
 class HomeController extends BaseController {
   async index() {
-    await this.ctx.render("index.html")
-  }
-
-  async getFiles() {
     var list = await this.findSync("/Users/joezou/pic/");
     console.log("list:"+list)
 
