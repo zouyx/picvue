@@ -18,19 +18,37 @@
         </div>
       </el-col>
   </el-row>
-  <el-row>
-    <el-col :span="4" v-for="(item, index) in imgs" :key="item" :offset="index > 0 ? 2 : 0" style="margin-left:1%">
-      <el-card :body-style="{ padding: '0px' }" >
-        <img :src="item" height="200" width="300">
-        <div style="padding: 14px;">
-          <span>{{item}}</span>
-          <div class="bottom clearfix">
-            <el-button type="text" class="button" v-on:click="doDelete(item)">删除</el-button>
-          </div>
-        </div>
-      </el-card>
-    </el-col>
-  </el-row>
+  <!--<el-row>-->
+    <!--<el-col :span="4" v-for="(item, index) in imgs" :key="item" :offset="index > 0 ? 2 : 0" style="margin-left:1%">-->
+      <!--<el-card :body-style="{ padding: '0px' }" >-->
+        <!--<img :src="item" height="200" width="300">-->
+        <!--<div style="padding: 14px;">-->
+          <!--<span>{{item}}</span>-->
+          <!--<div class="bottom clearfix">-->
+            <!--<el-button type="text" class="button" v-on:click="doDelete(item)">删除</el-button>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</el-card>-->
+    <!--</el-col>-->
+  <!--</el-row>-->
+  <div>
+    <el-table
+      :data="imgs"
+      :span-method="objectSpanMethod"
+      :show-header=false
+      style="width: 100%; margin-top: 20px">
+      <el-table-column
+        prop="path"
+        width="180">
+        <template slot-scope="scope">
+          <img  :src="scope.row.path" alt="" style="width: 150px;height: 150px">
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="">
+      </el-table-column>
+    </el-table>
+  </div>
 
   <style>
     .time {
@@ -73,28 +91,18 @@
 <!-- ajax -->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+  //服务端访问的ip
+  const IP ='http://127.0.0.1:7001'
+
+
   var app=new Vue({
     el: '#app',
     data: {
       imgs:[],
       visible2: false,
-      picDir:'',
+      picDir:'/Users/joezou/pic/',
     },
     created:function() {
-      var _self=this
-      axios.get('http://127.0.0.1:7001')
-        .then(function (response) {
-          console.log("response:");
-          console.log(response);
-          for (var path of response.data.data){
-            _self.imgs.push(path)
-          }
-          console.log(_self.imgs)
-        })
-        .catch(function (error) {
-          console.log("err:");
-          console.log(error);
-        });
     },
     methods:{
       doDelete: function (item) {
@@ -103,23 +111,29 @@
       search: function (event) {
         console.log("picDir:"+this.picDir)
         var _self=this
-        axios.get('http://127.0.0.1:7001', {
+        axios.get(IP, {
             params: {
               picDir: _self.picDir
             }
           })
           .then(function (response) {
-            console.log("response:");
-            console.log(response);
             for (var path of response.data.data){
               _self.imgs.push(path)
             }
-            console.log(_self.imgs)
           })
           .catch(function (error) {
             console.log("err:");
             console.log(error);
           });
+      },
+
+      objectSpanMethod({ row, column, rowIndex, columnIndex }) {
+        if (columnIndex === 1) {
+          return {
+            rowspan: row.size,
+            colspan: 1
+          };
+        }
       }
     }
   })

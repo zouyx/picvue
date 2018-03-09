@@ -26,7 +26,7 @@ class HomeController extends BaseController {
     var files=Fs.readdirSync(startPath);
     for (var path of files) {
       var fPath = Join(startPath, path);
-      result.push(fPath);
+      result.push({"path":fPath});
     }
 
     return result;
