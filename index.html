@@ -7,6 +7,18 @@
 <body>
 <div id="app">
   <el-row>
+      <el-col :span="10">
+        <div class="grid-content bg-purple">
+          <el-input v-model="picDir" placeholder="请输入内容"></el-input>
+        </div>
+      </el-col>
+      <el-col :span="12">
+        <div class="grid-content bg-purple-light">
+          <el-button type="primary" icon="el-icon-search" v-on:click="search">搜索</el-button>
+        </div>
+      </el-col>
+  </el-row>
+  <el-row>
     <el-col :span="4" v-for="(item, index) in imgs" :key="item" :offset="index > 0 ? 2 : 0" style="margin-left:1%">
       <el-card :body-style="{ padding: '0px' }" >
         <img :src="item" height="200" width="300">
@@ -65,7 +77,8 @@
     el: '#app',
     data: {
       imgs:[],
-      visible2: false
+      visible2: false,
+      picDir:'',
     },
     created:function() {
       var _self=this
@@ -86,6 +99,27 @@
     methods:{
       doDelete: function (item) {
         console.log("item:"+item)
+      },
+      search: function (event) {
+        console.log("picDir:"+this.picDir)
+        var _self=this
+        axios.get('http://127.0.0.1:7001', {
+            params: {
+              picDir: _self.picDir
+            }
+          })
+          .then(function (response) {
+            console.log("response:");
+            console.log(response);
+            for (var path of response.data.data){
+              _self.imgs.push(path)
+            }
+            console.log(_self.imgs)
+          })
+          .catch(function (error) {
+            console.log("err:");
+            console.log(error);
+          });
       }
     }
   })

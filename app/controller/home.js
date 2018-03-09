@@ -6,8 +6,12 @@ const  Join = require('path').join;
 
 class HomeController extends BaseController {
   async index() {
-    var list = await this.findSync("/Users/joezou/pic/");
-    console.log("list:"+list)
+    var picDir = this.ctx.query["picDir"];
+    console.log("picDir:"+picDir)
+
+    // var list = await this.findSync("/Users/joezou/pic/");
+    var list = await this.findSync(picDir);
+    // console.log("list:"+list)
 
     this.success(list);
   }
