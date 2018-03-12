@@ -36,16 +36,20 @@
       :data="imgs"
       :span-method="objectSpanMethod"
       :show-header=false
+      @cell-click="selectPic"
       style="width: 100%; margin-top: 20px">
       <el-table-column
         prop="path"
         width="180">
         <template slot-scope="scope">
-          <img  :src="scope.row.path" alt="" style="width: 150px;height: 150px">
+          <img  :src="scope.row.path" style="width: 150px;height: 150px">
         </template>
       </el-table-column>
       <el-table-column
-        prop="">
+        prop="path">
+        <template slot-scope="scope">
+          <img :src="showPic">
+        </template>
       </el-table-column>
     </el-table>
   </div>
@@ -101,12 +105,16 @@
       imgs:[],
       visible2: false,
       picDir:'/Users/joezou/pic/',
+      showPic:'/Users/joezou/pic/3828072.jpg',
     },
     created:function() {
     },
     methods:{
       doDelete: function (item) {
         console.log("item:"+item)
+      },
+      selectPic: function (row, column, cell, event) {
+        this.showPic=row.path
       },
       search: function (event) {
         console.log("picDir:"+this.picDir)
@@ -117,6 +125,9 @@
             }
           })
           .then(function (response) {
+            //先清空
+            _self.imgs=[]
+            //后加入
             for (var path of response.data.data){
               _self.imgs.push(path)
             }
@@ -129,10 +140,17 @@
 
       objectSpanMethod({ row, column, rowIndex, columnIndex }) {
         if (columnIndex === 1) {
-          return {
-            rowspan: row.size,
-            colspan: 1
-          };
+          if(rowIndex==0){
+            return {
+              rowspan: this.imgs.length,
+              colspan: 1
+            };
+          }else{
+            return {
+              rowspan: 0,
+              colspan: 0
+            };
+          }
         }
       }
     }
