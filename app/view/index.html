@@ -18,41 +18,32 @@
         </div>
       </el-col>
   </el-row>
-  <!--<el-row>-->
-    <!--<el-col :span="4" v-for="(item, index) in imgs" :key="item" :offset="index > 0 ? 2 : 0" style="margin-left:1%">-->
-      <!--<el-card :body-style="{ padding: '0px' }" >-->
-        <!--<img :src="item" height="200" width="300">-->
-        <!--<div style="padding: 14px;">-->
-          <!--<span>{{item}}</span>-->
-          <!--<div class="bottom clearfix">-->
-            <!--<el-button type="text" class="button" v-on:click="doDelete(item)">删除</el-button>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</el-card>-->
-    <!--</el-col>-->
-  <!--</el-row>-->
-  <div>
-    <el-table
-      :data="imgs"
-      :span-method="objectSpanMethod"
-      :show-header=false
-      @cell-click="selectPic"
-      style="width: 100%; margin-top: 20px">
-      <el-table-column
-        prop="path"
-        width="180">
-        <template slot-scope="scope">
-          <img  :src="scope.row.path" style="width: 150px;height: 150px">
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="path">
-        <template slot-scope="scope">
-          <img :src="showPic">
-        </template>
-      </el-table-column>
-    </el-table>
-  </div>
+
+  <el-row :gutter="10">
+    <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
+        <div class="grid-content bg-purple">
+        <el-table
+          :data="imgs"
+          :show-header=false
+          @cell-click="selectPic"
+          style="width: 100%; margin-top: 20px">
+          <el-table-column
+            prop="path"
+            width="180">
+            <template slot-scope="scope">
+              <img  :src="scope.row.path" style="width: 150px;height: 150px">
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+    </el-col>
+    <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11">
+      <div class="grid-content bg-purple-light">
+        <img :src="showPic">
+      </div>
+    </el-col>
+  </el-row>
+
 
   <style>
     .time {
@@ -84,6 +75,23 @@
     .clearfix:after {
       clear: both
     }
+
+    .el-col {
+      border-radius: 4px;
+    }
+    .bg-purple-dark {
+      background: #99a9bf;
+    }
+    .bg-purple {
+      background: #d3dce6;
+    }
+    .bg-purple-light {
+      background: #e5e9f2;
+    }
+    .grid-content {
+      border-radius: 4px;
+      min-height: 36px;
+    }
   </style>
 
 </div>
@@ -105,7 +113,7 @@
       imgs:[],
       visible2: false,
       picDir:'/Users/joezou/pic/',
-      showPic:'/Users/joezou/pic/3828072.jpg',
+      showPic:'',
     },
     created:function() {
     },
@@ -137,22 +145,6 @@
             console.log(error);
           });
       },
-
-      objectSpanMethod({ row, column, rowIndex, columnIndex }) {
-        if (columnIndex === 1) {
-          if(rowIndex==0){
-            return {
-              rowspan: this.imgs.length,
-              colspan: 1
-            };
-          }else{
-            return {
-              rowspan: 0,
-              colspan: 0
-            };
-          }
-        }
-      }
     }
   })
 </script>
