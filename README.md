@@ -1,10 +1,26 @@
 # picvue
 
+Just a pic selection tool
+
+Background: Mac's pic viewer is too expensive
 
 
 ## QuickStart
 
-<!-- add docs here for user -->
+just run 
+
+```bash
+$ npm i
+$ npm run dev
+```
+
+enjoy it ~!
+
+## Design
+
+[element-ui][element-ui] for view
+
+[egg][egg] for server and control file
 
 see [egg docs][egg] for more detail.
 
@@ -13,14 +29,6 @@ see [egg docs][egg] for more detail.
 ```bash
 $ npm i
 $ npm run dev
-$ open http://localhost:7001/
-```
-
-### Deploy
-
-```bash
-$ npm start
-$ npm stop
 ```
 
 ### npm scripts
@@ -31,3 +39,4 @@ $ npm stop
 
 
 [egg]: https://eggjs.org
+[element-ui]: http://element-cn.eleme.io/
