@@ -1,10 +1,26 @@
 # picvue
 
+一个简单的图片选择工具
+
+背景：mac上的图片选择工具太贵
 
 
 ## 快速入门
 
-<!-- 在此次添加使用文档 -->
+直接运行 
+
+```bash
+$ npm i
+$ npm run dev
+```
+
+可以开始玩啦 ~!
+
+## 设计
+
+[element-ui][element-ui] 用于界面
+
+[egg][egg] 用于服务端控制操作文件
 
 如需进一步了解，参见 [egg 文档][egg]。
 
@@ -13,14 +29,6 @@
 ```bash
 $ npm i
 $ npm run dev
-$ open http://localhost:7001/
-```
-
-### 部署
-
-```bash
-$ npm start
-$ npm stop
 ```
 
 ### 单元测试
@@ -37,3 +45,4 @@ $ npm stop
 
 
 [egg]: https://eggjs.org
+[element-ui]: http://element-cn.eleme.io/
