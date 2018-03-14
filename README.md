@@ -1,8 +1,8 @@
 # picvue
 
-Just a pic selection tool
+Just a picture selection tool
 
-Background: Mac's pic viewer is too expensive
+Background: Mac's picture viewer is too expensive
 
 
 ## QuickStart
