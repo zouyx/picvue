@@ -17,7 +17,20 @@
           <el-button type="primary" icon="el-icon-search" v-on:click="search">搜索</el-button>
         </div>
       </el-col>
+
   </el-row>
+  <div class="block">
+    <!--<span class="demonstration">调整每页显示条数</span>-->
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page.sync="page"
+      :page-sizes="[5, ]"
+      :page-size="pageSize"
+      layout="sizes, prev, pager, next"
+      :total="total">
+    </el-pagination>
+  </div>
 
   <el-row :gutter="10">
     <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
@@ -114,6 +127,9 @@
       visible2: false,
       picDir:'/Users/joezou/pic/',
       showPic:'',
+      page:1,
+      pageSize:5,
+      total:0,
     },
     created:function() {
     },
@@ -129,22 +145,32 @@
         var _self=this
         axios.get(IP, {
             params: {
-              picDir: _self.picDir
+              picDir: _self.picDir,
+              page: _self.page,
+              pageSize: _self.pageSize,
             }
           })
           .then(function (response) {
             //先清空
             _self.imgs=[]
             //后加入
-            for (var path of response.data.data){
-              _self.imgs.push(path)
+            for (var pic of response.data.data.pic){
+              _self.imgs.push(pic)
             }
+            _self.total=response.data.data.total
           })
           .catch(function (error) {
             console.log("err:");
             console.log(error);
           });
       },
+      handleSizeChange(val) {
+        this.pageSize=val
+        this.search();
+      },
+      handleCurrentChange(val) {
+        this.search();
+      }
     }
   })
 </script>

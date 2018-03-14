@@ -4,16 +4,32 @@ const BaseController = require('./common/base_controller');
 const  Fs = require('fs');
 const  Join = require('path').join;
 
+let list=[]
+
 class HomeController extends BaseController {
   async index() {
     var picDir = this.ctx.query["picDir"];
-    console.log("picDir:"+picDir)
 
-    // var list = await this.findSync("/Users/joezou/pic/");
-    var list = await this.findSync(picDir);
-    // console.log("list:"+list)
+    list = await this.findSync(picDir);
 
-    this.success(list);
+    await this.query()
+  }
+
+  async query() {
+    var page = this.ctx.query["page"];
+    var pageSize = this.ctx.query["pageSize"];
+    var start = (page-1)*pageSize;
+    if(start<0){
+      start=0;
+    }
+    var end = page*pageSize;
+
+    var result=list.slice(start,end) // 10
+
+    this.success({
+      total:list.length,
+      pic:result
+    });
   }
 
   /**
